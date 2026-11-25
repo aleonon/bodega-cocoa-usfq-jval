@@ -1,15 +1,15 @@
 # Revisión adversarial del PRD — Bodega COCOA
 
 > **Fecha:** 23 de noviembre de 2026  
-> **Equipo:** Juanes Vargas y Aylin León  
-> **PRD revisado:** `docs/prd/prd.md`, versión 1.1  
+> **Equipo:** Juanes Vargas y Ailyn León  
+> **PRD revisado:** [`prd/prd-bodega-cocoa.md`](prd-bodega-cocoa.md), versión 1.1  
 > **Base de comparación:** PRD v1.0 del 22 de noviembre de 2026, notas del cliente (Entrevista.pdf, pp. 3–5) y decisiones expresas del equipo del 23 de noviembre.
 
 ## Método y jerarquía de fuentes
 
 La revisión sigue la guía «Del PRD generado al PRD revisado»: identificar huecos, registrar frases del borrador, contrastar fuentes y corregir sin presentar suposiciones como hechos. La fuente de mayor autoridad son las respuestas del cliente anotadas en clase; las decisiones posteriores del equipo son **provisionales** y aparecen en el PRD §6 como E23-01 a E23-08 y §7 como supuestos.
 
-**Atribución de hallazgos:** los cinco primeros huecos se identificaron en la revisión guiada y los tres últimos se profundizaron con análisis adversarial de IA. La clasificación «Equipo»/«IA» describe la procedencia de esta revisión asistida; antes de entregarla, Juanes y Aylin deben confirmar que refleja el trabajo real de ambos.
+**Atribución de hallazgos:** los cinco primeros huecos se identificaron en la revisión guiada y los tres últimos se profundizaron con análisis adversarial de IA. La clasificación «Equipo»/«IA» describe la procedencia de esta revisión asistida; antes de entregarla, Juanes y Ailyn deben confirmar que refleja el trabajo real de ambos.
 
 ## Huecos y correcciones
 

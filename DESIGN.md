@@ -4,7 +4,7 @@
 > **Versión:** 1.0 · 22 de noviembre de 2026  
 > **Equipo:** Juanes Vargas y Ailyn León  
 > **Fuente visual:** [`docs/diseno/brand-board.html`](docs/diseno/brand-board.html), basado en `brand-board-bodega-cocoa-v2.html` y el moodboard del equipo.  
-> **Fuente funcional:** [`docs/prd/prd.md`](docs/prd/prd.md).  
+> **Fuente funcional:** [`prd/prd-bodega-cocoa.md`](prd/prd-bodega-cocoa.md).  
 > **Estado:** guía de diseño para el MVP; decisiones técnicas visuales sujetas a validación con el equipo.
 
 **Lee este archivo antes de crear o modificar cualquier pantalla.** El PRD define qué hace el producto y sus reglas; este archivo define cómo se presenta y se comporta visualmente. Si una especificación funcional contradice este documento, prevalece el PRD: corregir el diseño y actualizar ambos documentos en el mismo cambio. **No inventar una regla de negocio para justificar una decisión visual.**
