@@ -2,7 +2,7 @@
 
 > **Fecha:** 23 de noviembre de 2026  
 > **Equipo:** Juanes Vargas y Ailyn León  
-> **PRD revisado:** [`prd/prd-bodega-cocoa.md`](prd-bodega-cocoa.md), versión 1.1  
+> **PRD revisado:** [`docs/prd/prd.md`](prd.md), versión 1.1  
 > **Base de comparación:** PRD v1.0 del 22 de noviembre de 2026, notas del cliente (Entrevista.pdf, pp. 3–5) y decisiones expresas del equipo del 23 de noviembre.
 
 ## Método y jerarquía de fuentes
