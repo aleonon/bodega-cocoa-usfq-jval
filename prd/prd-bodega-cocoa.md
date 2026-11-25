@@ -1,10 +1,10 @@
 # PRD — Bodega COCOA
 
 > **Proyecto final · Desarrollo Web 3 · Universidad San Francisco de Quito**  
-> **Versión:** 1.0 · 22 de noviembre de 2026  
+> **Versión:** 1.1 · 23 de noviembre de 2026  
 > **Equipo:** Juanes Vargas y Ailyn León  
 > **Cliente:** Bodega COCOA, USFQ  
-> **Estado:** documento base para validación y desarrollo del MVP  
+> **Estado:** revisado con ocho decisiones provisionales del equipo (23 nov); pendiente de ratificación del cliente en §7  
 > **Fuentes:** brief del equipo del 11 de noviembre de 2026; notas de la visita del cliente incluidas en las páginas 3–5 de `Entrevista.pdf`; aclaraciones posteriores del equipo del 22 de noviembre de 2026. El material visual de `MOODBOARD WEB 3.pdf` guía el brand board y `DESIGN.md`, no las reglas del negocio.
 
 ## 1. Problema y objetivo
@@ -27,28 +27,30 @@ Una autenticación correcta con Microsoft **no equivale** a una autorización pa
 
 ## 3. Alcance del MVP
 
-Las siguientes funcionalidades constituyen la propuesta de MVP para el avance funcional y la presentación final. Las características señaladas como supuestos en §7 deberán validarse antes de su implementación definitiva.
+Las siguientes funcionalidades conforman el **alcance objetivo del proyecto final**, sujeto a los supuestos de §7. Para el hito funcional del **2 de diciembre** se prioriza el flujo vertical de acceso autorizado → catálogo → carrito → solicitud → bloqueo temporal → aprobación manual (incluida aprobación parcial) → notificación → checklist de entrega/devolución → inventario actualizado. Las exportaciones avanzadas y funciones de reporting se programan para una fase posterior a esa primera demostración; no se eliminan del alcance objetivo. Esta priorización es una decisión del equipo del 23 de noviembre, no una promesa confirmada del cliente.
 
 1. **Acceso institucional:** permitir inicio y cierre de sesión mediante Microsoft institucional, con comprobación de una cuenta habilitada por COCOA.
 2. **Gestión de cuentas:** permitir al administrador registrar o habilitar usuarios autorizados, asignarles un rol, deshabilitarlos y establecer bloqueos temporales.
 3. **Catálogo:** mostrar equipos, accesorios, kits y espacios existentes, organizados por categorías, con búsqueda y filtros.
 4. **Fichas de recursos:** mostrar de uno a tres imágenes por artículo, descripción, características, identificador cuando corresponda, disponibilidad y condiciones relevantes.
 5. **Calendario de disponibilidad:** consultar días y franjas horarias disponibles antes de agregar un recurso a una solicitud, diferenciando equipos de espacios.
-6. **Carrito único por proceso:** agregar varios artículos y/o espacios a una solicitud, revisar cantidades y fechas y conservar el carrito activo hasta una hora.
+6. **Carrito único por proceso:** agregar varios artículos y/o espacios a una solicitud con **una ventana común de inicio y fin**, revisar cantidades y conservar el carrito sin enviar hasta una hora.
 7. **Checkout de reserva:** solicitar el propósito del préstamo, presentar las políticas y términos y permitir enviar una solicitud de aprobación manual.
-8. **Aprobación administrativa:** notificar por correo al administrador sobre una solicitud nueva y permitirle aprobarla o rechazarla desde el panel web.
-9. **Comunicación del resultado:** informar al solicitante el resultado de la revisión y mostrar el estado de la solicitud en su cuenta; no presentar una solicitud pendiente como aprobada.
+8. **Aprobación administrativa:** notificar por correo al administrador sobre una solicitud nueva, **retener temporalmente las unidades solicitadas mientras esté pendiente** y permitir aprobar todos, algunos o ningún artículo desde el panel; el bloqueo y la liberación se realizan de forma consistente en servidor.
+9. **Comunicación del resultado:** informar al solicitante el resultado de la revisión, incluidos los artículos aprobados y rechazados parcialmente, y mostrar el estado en su cuenta; no presentar una solicitud pendiente como aprobada.
 10. **Mis reservas:** mostrar próximas solicitudes, estados, detalles, comprobantes e historial para facilitar el retiro.
 11. **Cancelación:** permitir al solicitante cancelar desde la web hasta una hora antes del inicio previsto, cuando la reserva reúna las condiciones para cancelación.
-12. **Recordatorios por correo:** programar un mensaje al correo registrado 30 minutos antes del inicio del préstamo y otro 30 minutos antes de la devolución prevista, solo para reservas aprobadas y vigentes.
+12. **Recordatorios por correo:** programar un mensaje al correo registrado 30 minutos antes del inicio y otro 30 minutos antes de la devolución, solo para reservas aprobadas y vigentes; si la aprobación llega después del momento del aviso de inicio, enviar la confirmación inmediata y omitir el aviso vencido.
 13. **Panel administrativo:** listar y filtrar solicitudes por estado, fecha, usuario y horario; mostrar las tareas que requieren atención.
 14. **Gestión de inventario:** permitir al administrador crear, editar, deshabilitar o retirar del catálogo recursos, actualizar imágenes y gestionar unidades identificadas, kits y estados del equipo.
-15. **Control de disponibilidad:** impedir confirmar solicitudes incompatibles con el inventario, los bloqueos, el mantenimiento y los horarios permitidos.
-16. **Entrega verificada:** proporcionar al administrador un checklist por artículo/unidad para confirmar qué se entregó efectivamente y registrar fecha, hora y responsable.
+15. **Control de disponibilidad:** impedir retenciones simultáneas incompatibles y confirmar solicitudes solo tras verificar inventario, retenciones, mantenimiento y horarios; permitir liberar unidades al rechazar, cancelar o vencer.
+16. **Entrega verificada:** proporcionar al administrador un checklist **por unidad** para marcar entregada o faltante, indicar motivo del faltante y registrar fecha, hora y responsable; lo no entregado nunca debe aparecer como prestado.
 17. **Devolución registrada:** permitir al administrador comprobar la devolución de artículos, registrar faltantes o daños y actualizar su disponibilidad.
 18. **Espacios y estaciones:** permitir consultar y solicitar un espacio completo o estaciones individuales cuando estas estén configuradas como recursos separados.
-19. **Reportes y comprobantes:** ofrecer un comprobante por reserva y exportación de datos de reservas en Excel y PDF para la administración.
+19. **Reportes y comprobantes:** ofrecer comprobante consultable por reserva en el flujo base; **exportaciones administrativas Excel/PDF y reportes avanzados se priorizan después del hito del 2 de diciembre**, dentro del alcance objetivo del proyecto final.
 20. **Trazabilidad y privacidad:** guardar cambios de estado y acciones administrativas relevantes, proteger las rutas por rol y limitar la exposición de datos personales.
+
+**Nota técnica de coherencia:** el bloqueo del carrito durante una hora aplica solo a la **edición no enviada**; la retención temporal de una **solicitud enviada y pendiente** es otro mecanismo. El vencimiento automático al inicio aplica solo a solicitudes pendientes; la devolución atrasada no produce devolución ni liberación automática.
 
 **Criterio de alcance:** los requisitos anteriores son la referencia funcional del MVP; cualquier integración o automatización no confirmada se documenta en §7 o §5, no se asume como aprobada.
 
@@ -73,37 +75,38 @@ Las siguientes funcionalidades constituyen la propuesta de MVP para el avance fu
 
 ### 4.3 Reserva y disponibilidad
 
-12. Un carrito agrupa varios recursos en **una sola solicitud**. Tras enviarla, el carrito se vacía; el usuario puede iniciar otra solicitud para fechas diferentes. No hay un límite general confirmado de reservas por estudiante.
+12. Un carrito agrupa varios recursos en **una sola solicitud y una ventana común de inicio y fin**. Tras enviarla, el carrito se vacía; el usuario puede iniciar otra solicitud para fechas diferentes. No hay un límite general confirmado de reservas por estudiante. **La ventana común es decisión provisional del equipo (23 nov), no respuesta del cliente.**
 13. El carrito puede permanecer abierto **como máximo una hora** desde su inicio. Al vencer, se descarta su contenido no enviado; se informará al usuario antes de perderlo (comportamiento exacto del aviso: supuesto).
 14. La interfaz utilizará formato de **24 horas** y selección de horarios en intervalos de **30 minutos**.
-15. Los retiros solo pueden programarse dentro del horario operativo indicado por el cliente: **08:30–17:20**, hora de Ecuador, en días hábiles habilitados. Como 17:20 no coincide con la cuadrícula de 30 minutos, el último turno válido queda pendiente de confirmación (§7).
+15. Los retiros se programan desde **08:30** en intervalos de **30 minutos**; **17:00** es el último inicio de turno seleccionable y **17:20** se considera cierre administrativo, en días hábiles habilitados (hora de Ecuador). **La distinción 17:00/17:20 es un supuesto del equipo, sujeto a confirmación; las devoluciones no deben asumir automáticamente el mismo último horario.**
 16. No se permitirá programar retiros fuera del horario de atención ni en feriados o días bloqueados. Las restricciones de devolución y el horario de espacios deben confirmarse por separado (§7).
 17. El cliente mencionó una **separación de 30 minutos entre reservas**. Se implementará solo cuando se confirme si corresponde a colchón entre préstamos, turnos de retiro, uso de espacios u otra operación (§7); no se asumirá que afecta a todos los recursos de la misma forma.
 18. La solicitud puede hacerse sin una antelación mínima adicional a las reglas de horario y disponibilidad; su efectividad depende de aprobación administrativa antes del retiro. La consecuencia de solicitudes inmediatas sin tiempo suficiente para aprobar está abierta (§7).
 19. La duración del préstamo dependerá del motivo académico y puede llegar hasta **un semestre**, sujeto a revisión administrativa. No existe renovación automática del préstamo.
 20. Cada solicitud debe incluir un comentario sobre su finalidad, por ejemplo tesis, documental, clase o proyecto.
-21. El envío de la solicitud **no equivale a aprobación**. Su estado inicial es «Pendiente de aprobación» y debe ser revisada manualmente por un administrador.
+21. El envío de la solicitud **no equivale a aprobación**. Su estado inicial es «Pendiente de aprobación» y debe ser revisada manualmente por un administrador. Mientras esté pendiente, las unidades solicitadas quedan **apartadas temporalmente para esa ventana** y no pueden ser retenidas por otra solicitud incompatible; el bloqueo se libera al rechazar, cancelar, vencer o retirar artículos en una aprobación parcial. Regla provisional del equipo (23 nov; §7).
 22. Al crearse una solicitud pendiente, se envía un correo al administrador; al aprobarla o rechazarla, el usuario recibe una notificación al correo de su cuenta.
-23. Antes de aprobar, el sistema vuelve a comprobar disponibilidad y conflictos para evitar que se aprueben dos reservas incompatibles.
-24. La autorización parcial de artículos de una misma solicitud, el efecto de solicitudes pendientes sobre disponibilidad y la prioridad exacta «por orden» no están confirmados (§7).
+23. Antes de aprobar, el sistema verifica de forma **atómica** que la retención temporal sigue vigente y que no hay conflictos con recursos fuera de servicio u otras reservas; al aprobar parcialmente, conserva el bloqueo solo para las unidades aprobadas y libera inmediatamente las rechazadas. Una misma unidad no puede quedar asignada a dos reservas incompatibles.
+24. El administrador puede **aprobar una parte** de los artículos y rechazar el resto en una sola revisión. La confirmación discrimina unidades aprobadas/rechazadas y razones; la reserva activa y el checklist incluyen **solo lo aprobado**. La prioridad exacta «por orden» sigue sin confirmarse (§7). Esta modalidad de aprobación parcial es decisión provisional del equipo del 23 nov.
 25. El administrador puede intervenir o modificar el contenido de una solicitud; el alcance de esa potestad y cómo se informa al usuario se documentan como preguntas abiertas (§7).
-26. El usuario podrá cancelar una reserva desde la plataforma **hasta una hora antes** del inicio previsto; las excepciones y las cancelaciones administrativas quedan sujetas a validación.
-27. Los recordatorios automáticos se envían **30 minutos antes del inicio previsto** y **30 minutos antes de la devolución prevista**, exclusivamente a la dirección asociada a la cuenta autorizada. Una reserva cancelada o rechazada no recibirá recordatorios de retiro/devolución.
+26. Si llega la hora de inicio de una solicitud **todavía pendiente de aprobación**, esta pasa automáticamente a «Vencida» y libera sus retenciones. La regla **no aplica a reservas ya aprobadas**. Una solicitud vencida no puede aprobarse; el usuario deberá iniciar otra. Decisión provisional del equipo del 23 nov (§7).
+27. El usuario podrá cancelar una reserva desde la plataforma **hasta una hora antes** del inicio previsto; las excepciones y las cancelaciones administrativas quedan sujetas a validación.
+28. Los recordatorios automáticos se envían **30 minutos antes del inicio previsto** y **30 minutos antes de la devolución prevista**, exclusivamente a la dirección asociada a la cuenta autorizada, si la reserva está aprobada y vigente. Si se aprueba cuando el aviso de inicio ya venció, **se envía la confirmación inmediata y no se envía retroactivamente ese aviso**. Una reserva cancelada, rechazada o vencida no recibe recordatorios posteriores; se registra el resultado de cada intento de envío.
 
 ### 4.4 Entrega, devolución y seguimiento
 
-28. El administrador registra la entrega real a través de un checklist de los artículos y unidades incluidas en la reserva; la lista deberá reflejar los ítems efectivamente entregados, incluso ante una entrega incompleta.
-29. El administrador registra la devolución real mediante verificación de los artículos y su condición. Hasta que se registre o se resuelva una incidencia, el equipo no se vuelve a ofrecer automáticamente como disponible por el solo transcurso del horario programado (**supuesto operativo**).
-30. Un equipo registrado como dañado, extraviado o en mantenimiento queda excluido de nuevas aprobaciones mientras conserve ese estado.
-31. El administrador puede consultar el historial de reservas, entregas y devoluciones y registrar incidencias relevantes. Las multas y un puntaje de estrellas requerirán reglas adicionales antes de automatizarse (§5 y §7).
-32. Los estados propuestos para el ciclo de la solicitud son: **Pendiente de aprobación → Aprobada → En préstamo → Devuelta**. También pueden terminar como **Rechazada** o **Cancelada**; **Vencida / con devolución atrasada** es un indicador que depende de fecha y devolución efectiva. La formalización de transiciones se validará con el cliente.
+29. El administrador registra la entrega real con un **checklist por unidad aprobada**: «Entregada» o «Faltante», motivo del faltante, responsable y fecha/hora. Solo las unidades marcadas «Entregada» entran en préstamo y son exigibles en la devolución. Si no se entrega ninguna unidad, la solicitud no pasa a «En préstamo». Esta distinción por unidad es decisión provisional del equipo del 23 nov.
+30. El administrador registra la devolución real mediante verificación de los artículos y su condición. Hasta que se registre o se resuelva una incidencia, el equipo no se vuelve a ofrecer automáticamente como disponible por el solo transcurso del horario programado (**supuesto operativo**).
+31. Un equipo registrado como dañado, extraviado o en mantenimiento queda excluido de nuevas aprobaciones mientras conserve ese estado.
+32. El administrador puede consultar el historial de reservas, entregas y devoluciones y registrar incidencias relevantes. Las multas y un puntaje de estrellas requerirán reglas adicionales antes de automatizarse (§5 y §7).
+33. Estados del ciclo de solicitud: **Pendiente de aprobación → Aprobada → En préstamo → Devuelta**; puede concluir como **Rechazada**, **Cancelada** o **Vencida**. «Vencida» significa **solicitud aún pendiente al alcanzar su hora de inicio**: se cierra automáticamente, se liberan todas sus retenciones y se impide aprobarla después. «Devolución atrasada» es un **indicador independiente** para equipos entregados no devueltos al vencer la hora final; **no** libera unidades automáticamente. La aprobación parcial se muestra como detalle de una reserva aprobada. Estas transiciones de borde son provisionales (§7).
 
 ### 4.5 Privacidad y seguridad
 
-33. Las operaciones administrativas se autorizan en el servidor y la base de datos, no solo ocultando botones en la interfaz.
-34. La base de datos guarda únicamente los datos personales necesarios para identificar al usuario, autorizar el préstamo y conservar su historial operativo. No se almacenarán contraseñas de Microsoft.
-35. Los registros administrativos sensibles deben identificar quién realizó cada acción y cuándo, con acceso limitado al personal autorizado.
-36. Los comprobantes, exports y correos no expondrán datos personales de otros estudiantes. Se utilizarán conexiones cifradas y secretos fuera del código fuente.
+34. Las operaciones administrativas se autorizan en el servidor y la base de datos, no solo ocultando botones en la interfaz.
+35. La base de datos guarda únicamente los datos personales necesarios para identificar al usuario, autorizar el préstamo y conservar su historial operativo. No se almacenarán contraseñas de Microsoft.
+36. Los registros administrativos sensibles deben identificar quién realizó cada acción y cuándo, con acceso limitado al personal autorizado.
+37. Los comprobantes, exports y correos no expondrán datos personales de otros estudiantes. Se utilizarán conexiones cifradas y secretos fuera del código fuente.
 
 ## 5. Fuera de alcance del MVP
 
@@ -117,7 +120,7 @@ Las siguientes funcionalidades constituyen la propuesta de MVP para el avance fu
 | Sincronización con plataformas externas de inventario | Fuera del MVP | No hay formato, permisos ni conexión definidos; el catálogo se podrá gestionar manualmente |
 | Funciones de inteligencia artificial para aprobar reservas | Fuera del MVP | La aprobación solicitada es humana y explícita |
 
-El **registro de bloqueos y de incidencias** sí pertenece al MVP; lo que se pospone es el cálculo automático de multas o reputación.
+El **registro de bloqueos y de incidencias** sí pertenece al alcance objetivo; lo que se pospone es el cálculo automático de multas o reputación. Para el hito del **2 de diciembre**, los reportes avanzados y las exportaciones administrativas Excel/PDF quedan después del flujo operativo esencial; son requisitos del objetivo final, no funcionalidades descartadas.
 
 ## 6. Decisiones del cliente y aclaraciones posteriores
 
@@ -145,6 +148,19 @@ El **registro de bloqueos y de incidencias** sí pertenece al MVP; lo que se pos
 | A07 | 22 nov 2026 | Aclaración del equipo | El administrador mantiene control de los estados del inventario | Gestión operativa permanente |
 | A08 | 22 nov 2026 | Aclaración del equipo | No hay stack obligatorio; privacidad, flexibilidad y protección de cuentas son prioritarias | Elección técnica documentada y medidas de seguridad |
 
+### Decisiones del equipo durante la auditoría (23 nov 2026; no atribuidas al cliente)
+
+| ID | Fecha | Fuente | Decisión provisional | Requiere ratificación del cliente |
+| --- | --- | --- | --- | --- |
+| E23-01 | 23 nov 2026 | Equipo, auditoría R01 | Retener temporalmente los recursos desde el envío hasta decisión, cancelación o vencimiento al inicio | Sí: política y tiempo máximo de retención |
+| E23-02 | 23 nov 2026 | Equipo, auditoría R02 | Un inicio y una devolución comunes para todo el carrito | Sí: casos con recursos y duraciones diferentes |
+| E23-03 | 23 nov 2026 | Equipo, auditoría R03 | Aprobación parcial por unidad y liberación de unidades rechazadas | Sí: notificación y consentimiento ante modificaciones |
+| E23-04 | 23 nov 2026 | Equipo, auditoría R04 | Checklist por unidad con motivo de faltantes | Sí: evidencia adicional y tratamiento de faltantes |
+| E23-05 | 23 nov 2026 | Equipo, auditoría R05 | Último turno seleccionable a las 17:00; cierre administrativo 17:20 | Sí: confirmación expresa de horarios |
+| E23-06 | 23 nov 2026 | Equipo, auditoría R06 | Solicitud todavía pendiente vence al llegar su hora de inicio | Sí: excepciones y solicitudes inmediatas |
+| E23-07 | 23 nov 2026 | Equipo, auditoría R07 | Ante aprobación posterior a T−30, confirmación inmediata sin recordatorio de inicio retroactivo | Sí: comportamiento esperado |
+| E23-08 | 23 nov 2026 | Equipo, auditoría R08 | Demostración 2 dic: flujo operativo esencial; reportes avanzados después | Sí: prioridades reales del hito |
+
 **Contradicciones del primer avance aún relevantes:** los resúmenes discrepan sobre costo mensual (USD 150 frente a USD 1,50), naturaleza de la entrega de diciembre y algunos horarios. Ninguno de estos valores contradictorios se usará como decisión de arquitectura o presupuesto sin confirmación.
 
 ## 7. Supuestos y preguntas abiertas
@@ -153,32 +169,36 @@ Cada supuesto es provisional. No sustituye una respuesta del cliente.
 
 | ID | Prioridad | Pregunta pendiente | Supuesto de trabajo hasta confirmación |
 | --- | --- | --- | --- |
-| S01 | Alta | ¿Una solicitud pendiente aparta inventario y durante cuánto tiempo? | La solicitud pendiente **no consume definitivamente** inventario; la disponibilidad se revalida al aprobar |
-| S02 | Alta | ¿El administrador puede aprobar solo una parte del carrito o debe decidir sobre toda la solicitud? | Aprobar o rechazar la solicitud completa; si falta algo, solicitar nueva selección antes de aprobar |
+| S01 | Alta | ¿El cliente ratifica el bloqueo temporal durante la revisión, y debe existir un plazo máximo adicional de espera? | **Decisión del equipo 23 nov:** apartar unidades al enviar y mantenerlas retenidas hasta aprobación, rechazo, cancelación o vencimiento a la hora de inicio; sin liberar por el temporizador de carrito de una hora |
+| S02 | Alta | ¿El cliente confirma que el administrador puede aprobar artículos por separado y que la reserva continúa con los aprobados? | **Decisión del equipo 23 nov:** aprobación parcial por unidad; informar al usuario, liberar lo rechazado y dejar solo lo aprobado en entrega y devolución |
 | S03 | Alta | ¿Qué ocurre con reservas aprobadas si un equipo pasa a mantenimiento o se daña? | Marcar conflicto y alertar al administrador; no reasignar ni cancelar automáticamente |
 | S04 | Alta | ¿Qué significa «por orden» al revisar reservas simultáneas? | Ordenar la cola por hora de envío, pero la aprobación sigue siendo manual |
-| S05 | Alta | ¿Cuál es el último turno permitido con horario 08:30–17:20 y bloques de 30 min? | Mostrar franjas desde 08:30 y no aceptar retiros posteriores a 17:20; el último turno específico requiere validación |
+| S05 | Alta | ¿El cliente confirma que 17:00 es la última hora de retiro y 17:20 solo cierre operativo? ¿Qué horario aplica a devoluciones? | **Decisión provisional del equipo 23 nov:** última franja de inicio 17:00; 17:20 cierre administrativo, sin asumir que es hora máxima de devolución |
 | S06 | Alta | ¿Los 30 minutos «entre reservas» son separación de uso, intervalos del calendario o turnos de atención? | Solo discretización del selector en 30 min hasta aclararlo; no bloquear 30 min extra entre préstamos |
-| S07 | Alta | ¿Cuándo se libera un equipo no retirado y cómo se determina una devolución atrasada? | Solo el administrador libera o cierra una solicitud no retirada; la devolución atrasada se identifica sin liberar inventario automáticamente |
-| S08 | Alta | ¿Qué pasa cuando se solicita para empezar en menos de 30 minutos y aún no hay aprobación? | El usuario puede solicitar dentro de horario; no se entrega ni se envía recordatorio hasta la aprobación; advertir que la solicitud puede no atenderse a tiempo |
+| S07 | Alta | ¿Qué pasa con una reserva aprobada pero no retirada al comenzar y cómo se diferencia de una solicitud pendiente vencida? | **Decisión del equipo 23 nov:** solo las pendientes vencen automáticamente al llegar su inicio; las aprobadas no retiradas requieren gestión administrativa; devoluciones atrasadas no liberan inventario automáticamente |
+| S08 | Alta | ¿Aceptará el cliente que solicitudes pendientes sin respuesta expiren en su hora de inicio, incluso si se enviaron pocos minutos antes? | **Decisión del equipo 23 nov:** la solicitud puede enviarse sin anticipación mínima, pero si no se aprueba hasta su inicio pasa a «Vencida» y libera recursos |
 | S09 | Alta | ¿Cómo se relaciona la reserva del estudio completo con la de estaciones individuales? | El espacio completo bloquea sus estaciones y viceversa en el período compartido |
 | S10 | Media | ¿Todas las reservas de profes siguen las mismas reglas y requieren su propio usuario? | Profes autorizados utilizan el mismo flujo de solicitud que estudiantes |
 | S11 | Media | ¿Qué puede modificar el administrador de un carrito ya enviado y cuándo se pide aceptación del usuario? | Puede proponer ajustes antes de aprobar; se registra el cambio y se comunica al usuario |
 | S12 | Media | ¿Qué artículos llevan unidad identificada y aplica la referencia de USD 500? | La trazabilidad por unidad será configurable por artículo; no se impondrá el umbral económico hasta ratificación |
 | S13 | Media | ¿Los kits descuentan automáticamente sus piezas y cómo se representan accesorios sin ID? | Kits como agrupaciones de recursos; unidades de cada componente se validan al aprobar |
-| S14 | Media | ¿Qué evidencia o firma se requiere para la entrega y la devolución? | Checklist con responsable, marcas de cada artículo y marca de tiempo; sin firma digital obligatoria |
+| S14 | Media | ¿Debe requerirse evidencia adicional al marcar unidades faltantes en una entrega parcial? | **Decisión del equipo 23 nov:** checklist por unidad, entrega/faltante, motivo, responsable y hora; sin firma digital obligatoria mientras el cliente no la pida |
 | S15 | Media | ¿Qué información exacta llevará el comprobante y qué significa «cada reserva genera Excel»? | Comprobante descargable/consultable por reserva; exportación Excel/PDF disponible desde administración |
 | S16 | Media | ¿Quién recibe el aviso al administrador: uno o varios correos? ¿Se espera confirmación de entrega? | Destinatarios configurables; registro de intentos y reintentos, sin asumir que correo enviado equivale a leído |
-| S17 | Media | ¿Se notifican también los cambios de fecha, cancelaciones y rechazos? | Avisar resultado de aprobación y cancelaciones; reprogramar recordatorios cuando haya cambios confirmados |
+| S17 | Media | ¿Se notifican también los cambios de fecha, cancelaciones y rechazos? | Avisar resultado de aprobación (incluida aprobación parcial) y cancelaciones; reprogramar recordatorios para cambios confirmados y omitir recordatorios ya vencidos al aprobar tarde |
 | S18 | Media | ¿Se permite cancelar exactamente a 60 minutos del inicio? | Sí, hasta inclusive el límite de 60 min; después solo administración podrá resolverlo |
 | S19 | Media | ¿Cuál es el proceso y escala de multas, bloqueo y score? | Guardar historial de incidencias y bloqueos manuales; sin multas automáticas ni calificación algorítmica |
 | S20 | Media | ¿Cuál es el calendario institucional de feriados, excepciones y reservas de espacios? | Administrador configura días no operativos y horarios por tipo de recurso |
 | S21 | Media | ¿Cómo se importará el inventario ya existente? | Carga inicial controlada a partir de datos facilitados por COCOA y posterior edición manual |
 | S22 | Media | ¿Cuál es el presupuesto y el proveedor aprobado de infraestructura y correo? | Usar servicios con planes de desarrollo y costos explícitos; no fijar presupuesto hasta confirmación |
 | S23 | Media | ¿Cuánto tiempo se conserva el historial, quién puede exportarlo y cómo se atienden solicitudes de datos personales? | Acceso limitado a administradores y conservación mínima necesaria; política de retención por definir con COCOA/USFQ |
+| S25 | Alta | ¿Todos los artículos y espacios de un carrito deben tener la misma fecha/hora de inicio y fin? | **Decisión del equipo 23 nov:** ventana común para la solicitud completa, sin duraciones distintas por artículo |
+| S26 | Alta | ¿Qué sucede si una retención pendiente bloquea una cámara durante días o meses porque la reserva inicia mucho después? | **Decisión del equipo 23 nov:** retención hasta decisión o inicio; **se necesita validar un plazo máximo administrativo de revisión** antes de producción |
+| S27 | Media | ¿Cómo se comunica una aprobación parcial al estudiante y se registra su aceptación de los cambios? | **Decisión del equipo 23 nov:** correo con desglose aprobado/rechazado; no se presume consentimiento a sustituciones |
+| S28 | Media | ¿Cuáles son los hitos obligatorios del 2 de diciembre y cuáles pueden ir a la presentación final? | **Decisión del equipo 23 nov:** primero flujo de reserva, aprobación, entrega y devolución; exportaciones avanzadas después |
 | S24 | Baja | ¿Cómo se notifican al administrador revisiones periódicas del inventario? | Dashboard de estados disponible en todo momento; correos de resumen semanales quedan como mejora futura |
 
-**No inferir como hechos:** horarios exactos para devoluciones, prioridad real de las solicitudes pendientes, multas, valoración por estrellas, infraestructura final, régimen de aprobación parcial o automatización de no retiro.
+**No inferir como respuestas del cliente:** horarios exactos para devoluciones, prioridad real entre solicitudes, duración máxima de retenciones, aceptación de cambios parciales, multas, valoración por estrellas e infraestructura final. Las ocho decisiones del 23 nov son **propuestas del equipo**, registradas expresamente para su validación.
 
 ## 8. Épicas del MVP
 
@@ -198,19 +218,19 @@ Las historias de usuario, criterios de aceptación detallados y tareas por épic
 
 1. Un usuario institucional **sin habilitación** no puede crear ni consultar reservas ajenas, incluso si inició sesión correctamente con Microsoft.
 2. Un usuario habilitado puede encontrar un artículo, consultar fechas y enviar una solicitud con varios recursos desde móvil o escritorio, sin intervención manual previa del administrador.
-3. Al enviar una solicitud se muestra **Pendiente de aprobación**, se registra una sola vez y el administrador recibe el aviso correspondiente.
-4. El administrador puede aprobar o rechazar desde el panel; ninguna reserva pendiente aparece como aprobada antes de la decisión humana.
-5. El sistema rechaza una aprobación que produciría un conflicto de disponibilidad con otra reserva o con mantenimiento.
-6. Los recordatorios se programan para **T−30 minutos de inicio** y **T−30 minutos de devolución** de una reserva aprobada; cancelarla evita avisos futuros. En pruebas se verifican ejecución y registro de intentos de entrega.
-7. Un administrador puede marcar, ítem por ítem, qué se entregó y qué se devolvió, consultar el registro y dejar fuera de disponibilidad un artículo dañado o extraviado.
-8. Un usuario puede consultar sus propias reservas e historial; un administrador puede localizar una reserva y generar sus comprobantes o reportes sin hojas de seguimiento manuales.
+3. Al enviar una solicitud se muestra **Pendiente de aprobación**, se registra una sola vez, se apartan temporalmente los recursos solicitados y el administrador recibe el aviso correspondiente; al alcanzar su inicio sin decisión, pasa a «Vencida» y libera las unidades.
+4. El administrador puede aprobar todo, aprobar parcialmente o rechazar desde el panel; el estudiante ve qué unidades se aprobaron y cuáles no, y ninguna reserva pendiente aparece como aprobada antes de la decisión humana.
+5. Al enviar, el sistema evita **dos retenciones incompatibles sobre una misma unidad y período**; antes de aprobar vuelve a validar la retención y el estado físico, y libera las unidades rechazadas en una aprobación parcial sin doble asignación.
+6. Los recordatorios se programan para **T−30 minutos de inicio** y **T−30 minutos de devolución** de una reserva aprobada; una aprobación posterior a T−30 genera confirmación inmediata, sin aviso de inicio retroactivo. Cancelación o vencimiento impiden avisos futuros. Se verifican intentos y resultados en pruebas.
+7. Un administrador puede marcar **por unidad** qué se entregó y qué faltó (con motivo), exigir devolución solo de lo realmente entregado, consultar el registro y dejar fuera de disponibilidad un artículo dañado o extraviado.
+8. Un usuario puede consultar sus propias reservas e historial; el administrador puede localizar solicitudes, incluyendo las pendientes que vencieron y las parcialmente aprobadas. Los reportes avanzados y exportaciones Excel/PDF se validarán en la fase posterior al hito del 2 de diciembre.
 9. Los controles de acceso se verifican en API y base de datos; ningún usuario no autorizado accede a información de otros por manipular URL o peticiones.
 10. Las principales pantallas son navegables por teclado, muestran errores comprensibles y mantienen contraste de texto de al menos **4.5:1**.
 
 ### Restricciones y condiciones de implementación
 
 - **Segundo avance documental:** miércoles **25 de noviembre de 2026, 23:59**. Se entrega un repositorio GitHub accesible al docente que incluya `docs/prd/prd.md`, `docs/diseno/brand-board.html`, `DESIGN.md` y `README.md`.
-- **Primera entrega funcional comunicada en clase:** **2 de diciembre de 2026**. La fecha exacta de la presentación final deberá verificarse con el profesor.
+- **Primera entrega funcional comunicada en clase:** **2 de diciembre de 2026**. Alcance de demostración priorizado provisionalmente por el equipo: acceso, catálogo, carrito, solicitud, bloqueo, aprobación parcial, notificación, checklist y actualización de inventario; reportes avanzados después. La fecha exacta de la presentación final deberá verificarse con el profesor.
 - **Equipo:** dos integrantes, Juanes Vargas y Ailyn León.
 - **Tecnología:** sin stack obligatorio. Se evaluará una arquitectura con frontend adaptable, backend con validación en servidor, base de datos relacional o equivalente con garantías transaccionales, autenticación Microsoft y un mecanismo confiable de trabajos programados para correos. **Supabase es una opción planteada en las notas, no una obligación tecnológica confirmada.**
 - **Seguridad:** configuración de secretos fuera del repositorio, cifrado en tránsito, permisos basados en roles y políticas de acceso a datos, validación del lado del servidor, auditoría de acciones sensibles y protección contra dobles aprobaciones.
@@ -221,7 +241,7 @@ Las historias de usuario, criterios de aceptación detallados y tareas por épic
 
 ## Uso de IA
 
-El equipo utilizó **ChatGPT** para organizar el brief del primer avance, sintetizar las notas de la visita del cliente, identificar reglas ambiguas y casos límite, estructurar este PRD según la consigna y analizar la dirección de arte del moodboard. Las decisiones comunicadas en clase y las aclaraciones del equipo se distinguen de los supuestos; las preguntas sin respuesta se mantienen abiertas. **El equipo debe revisar y validar este documento antes de su publicación y uso por agentes de desarrollo.**
+El equipo utilizó **ChatGPT** para la auditoría adversarial del 23 de noviembre, documentada en `docs/prd/revision.md`, y previamente para organizar el brief del primer avance, sintetizar las notas de la visita del cliente, identificar reglas ambiguas y casos límite, estructurar este PRD según la consigna y analizar la dirección de arte del moodboard. Las decisiones comunicadas en clase y las aclaraciones del equipo se distinguen de los supuestos; las preguntas sin respuesta se mantienen abiertas. **El equipo debe revisar y validar este documento antes de su publicación y uso por agentes de desarrollo.**
 
 ---
 
