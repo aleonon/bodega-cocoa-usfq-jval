@@ -29,3 +29,17 @@ Abrir `docs/diseno/brand-board.html` en el navegador. La hoja de estilos `brand-
 - **Avance 1:** PRD, `DESIGN.md` y brand board.
 - **Avance 2 (25 nov 2026):** PRD revisado (v1.1), revisión adversarial y reorganización del repositorio.
 - **Siguiente hito:** demo funcional del flujo de reservas y control administrativo (2 dic 2026).
+
+## Ramas
+
+| Rama | Uso |
+| --- | --- |
+| `main` | Versión entregada. Contiene la documentación del Avance 2 tal como se entregó el 25 de noviembre de 2026. |
+| `desarrollo` | Trabajo de los siguientes avances, empezando por la demo del 2 de diciembre. Se integra a `main` al cerrar cada entrega. |
+
+Para trabajar en los próximos avances:
+
+```bash
+git checkout desarrollo
+git pull
+```
